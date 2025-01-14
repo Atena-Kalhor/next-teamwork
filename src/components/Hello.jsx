@@ -1,3 +1,5 @@
+"use client";
+
 function Hello() {
     return (
       <div>Hello</div>
