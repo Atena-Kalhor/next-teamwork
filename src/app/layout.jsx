@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import "./globals.css";
 import { CssBaseline} from "@mui/material";
 
@@ -10,6 +11,7 @@ export default function RootLayout({ children }) {
         <CssBaseline />
         <Navbar/>
       {children}
+      <Footer />
       </body>
     </html>
   );
