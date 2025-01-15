@@ -1,5 +1,10 @@
 import { Typography, Container } from "@mui/material";
 
+export const metadata = {
+  title: "about us",
+  description: "This is a about us page",
+};
+
 export default function About() {
   return (
     <Container
