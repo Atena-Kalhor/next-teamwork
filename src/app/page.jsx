@@ -1,5 +1,5 @@
-import Hello from "@/components/Hello"
-
+import Form1 from "@/components/Form1";
+import Hello from "@/components/Hello";
 
 export const metadata = {
   title: "Home",
@@ -9,8 +9,8 @@ export const metadata = {
 export default function Home() {
   console.log("Hello world!");
   return (
-    <div >
-    <Hello />
+    <div>
+      <Form1 />
     </div>
   );
 }
