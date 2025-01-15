@@ -20,7 +20,7 @@ const drawerWidth = 240;
 const links = [
   { href: "/", title: "Home" },
   { href: "/question", title: "Question" },
-  { href: "/aboutus", title: "About us" },
+  { href: "/about", title: "About us" },
 ];
 
 function Navbar({ toggleTheme }) {
