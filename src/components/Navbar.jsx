@@ -14,17 +14,17 @@ import Toolbar from "@mui/material/Toolbar";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import DarkMode from "@/components/DarkMode"; 
 
 const drawerWidth = 240;
 const links = [
   { href: "/", title: "Home" },
   { href: "/question", title: "Question" },
-  { href: "/aboutus", title: "About us" },
+  { href: "/about", title: "About us" },
 ];
 
-function Navbar() {
+function Navbar({ toggleTheme }) {
   const path = usePathname();
-
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -34,7 +34,7 @@ function Navbar() {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Box sx={{ my: 2 }}>
-        <Image src={"/logo.png"} width={70} height={40} alt="logo"  />
+        <Image src={"/logo.png"} width={70} height={40} alt="logo" />
       </Box>
       <Divider />
       <List>
@@ -52,13 +52,22 @@ function Navbar() {
           </Link>
         ))}
       </List>
+ 
+      <Box sx={{ mt: 2 }}>
+        <DarkMode toggleTheme={toggleTheme} />
+      </Box>
     </Box>
   );
 
   return (
-
     <Box sx={{ display: "flex" }}>
-      <AppBar component="header" color="primary" position="relative">
+      <AppBar
+        component="header"
+        sx={{
+          backgroundColor: "#1976d2",
+        }}
+        position="relative"
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -69,6 +78,7 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
+
           <Box
             sx={{
               flexGrow: 1,
@@ -76,7 +86,13 @@ function Navbar() {
               alignItems: "center",
             }}
           >
-            <Image src={"/logo.png"} width={70} height={40} alt="logo"  style={{ borderRadius: "100%" }}/>
+            <Image
+              src={"/logo.png"}
+              width={70}
+              height={40}
+              alt="logo"
+              style={{ borderRadius: "100%" }}
+            />
             <List sx={{ display: "flex", ml: 2 }}>
               {links.map((item) => {
                 const activeStyle = {
@@ -104,6 +120,11 @@ function Navbar() {
                 );
               })}
             </List>
+          </Box>
+
+     
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <DarkMode toggleTheme={toggleTheme} />
           </Box>
         </Toolbar>
       </AppBar>
