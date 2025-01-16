@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 import Image from "next/image";
-// import qaImage from "../../public/images/what_does_qa_stand_for.webp";
+import qaImage from "../../public/what_does_qa_stand_for.webp";
 
 const FirstSection = () => {
   return (
@@ -17,7 +17,9 @@ const FirstSection = () => {
         </Typography>
         <Button variant="contained">GO TO QUESTIONS</Button>
       </Box>
-      <Box>{/* <Image src={qaImage} width={400} height={200} /> */}</Box>
+      <Box>
+        <Image src={qaImage} width={400} height={200} />
+      </Box>
     </Container>
   );
 };
