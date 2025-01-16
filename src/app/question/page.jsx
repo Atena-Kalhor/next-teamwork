@@ -1,0 +1,1 @@
+import Searchbar from "@/components/Searchbar";
