@@ -32,8 +32,9 @@ function Form1() {
         justifyContent: "center",
         flexDirection: "column",
         gap: "20px",
-        width: "100vw",
+        width: "100%",
         mt: "50px",
+        mb: 5,
         // backgroundColor: "pink",
       }}
     >
