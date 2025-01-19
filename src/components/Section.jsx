@@ -5,9 +5,13 @@ import qaImage from "../../public/what_does_qa_stand_for.webp";
 
 const FirstSection = () => {
   return (
-    <Container sx={{ display: "flex" }}>
+    <Container
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
       <Box sx={{ mx: 5 }}>
-        <Typography sx={{ letterSpacing: 6 }}>Find your Answers</Typography>
+        <Typography sx={{ letterSpacing: 6, mt: 4 }}>
+          Find your Answers
+        </Typography>
         <Typography variant="h3">Questions and Answers</Typography>
         <Typography sx={{ my: 2 }}>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum ipsum,
@@ -18,7 +22,7 @@ const FirstSection = () => {
         <Button variant="contained">GO TO QUESTIONS</Button>
       </Box>
       <Box>
-        <Image src={qaImage} width={400} height={200} />
+        <Image src={qaImage} width={400} height={200} sx={{}} />
       </Box>
     </Container>
   );

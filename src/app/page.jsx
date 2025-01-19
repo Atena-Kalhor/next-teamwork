@@ -10,7 +10,6 @@ export default function Home() {
   console.log("Hello world!");
   return (
     <div>
-      <Hello />
       <FirstSection />
     </div>
   );
