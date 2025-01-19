@@ -1,4 +1,3 @@
-import Form1 from "@/components/Form1";
 import Hello from "@/components/Hello";
 
 export const metadata = {
@@ -10,7 +9,7 @@ export default function Home() {
   console.log("Hello world!");
   return (
     <div>
-      <Form1 />
+      <Hello />
     </div>
   );
 }
