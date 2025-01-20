@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import NestedModal from "./Modal";
 
 function Form1() {
   const [formData, setFormData] = useState({
@@ -15,14 +16,25 @@ function Form1() {
     description: "",
   });
 
-  async function handleSubmit() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // await postRace(race);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalConfirm = () => {
     setFormData({
       title: "",
       description: "",
     });
-  }
+    setIsModalOpen(false);
+  };
+
   return (
     <Box
       container
@@ -85,6 +97,11 @@ function Form1() {
           </Grid>
         </Grid>
       </form>
+      <NestedModal
+        open={isModalOpen}
+        handleClose={handleModalClose}
+        handleConfirm={handleModalConfirm}
+      />
     </Box>
   );
 }
