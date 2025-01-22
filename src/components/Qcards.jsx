@@ -3,7 +3,7 @@ import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Scale } from "@mui/icons-material";
 
-function Qcards() {
+function Qcards({ time }) {
   const d = new Date();
   console.log(d.toJSON());
   const data = [
@@ -11,27 +11,27 @@ function Qcards() {
       id: "1",
       title: "JS",
       discription: "this is a question of js",
-      time: d,
+      time: time,
     },
     {
       id: "2",
       title: "React",
       discription: "this is a question of react",
-      time: d,
+      time: time,
     },
     {
       id: "3",
       title: "Redux",
       discription:
         "this is a question of redux and i would be glad if anyone could anser me",
-      time: d,
+      time: time,
     },
     {
       id: "4",
       title: "css",
       discription:
         "this is a question of redux and i would be glad if anyone could anser me. if there is any problem pls give me some advice. thank you",
-      time: d,
+      time: time,
     },
   ];
 
@@ -91,9 +91,7 @@ function Qcards() {
                   // backgroundColor: "pink",
                 }}
               >
-                <Typography textAlign={"end"}>
-                  {item.time.toLocaleString()}
-                </Typography>
+                <Typography textAlign={"end"}>{time}</Typography>
               </Box>
             </Button>
             <Button
