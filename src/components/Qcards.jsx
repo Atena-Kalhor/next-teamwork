@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from "date-fns";
 import { getData, deleteQuestion } from "@/utils/actions";
+import { useRouter } from "next/navigation";
 
 export default function Qcards() {
   const [questions, setQuestions] = useState([]);
 
+  const router = useRouter();
   const fetchQuestions = async () => {
     try {
       const data = await getData("http://localhost:3000/api/v1/question");
@@ -57,16 +59,17 @@ export default function Qcards() {
               color: "black",
               transition: "transform 0.3s",
               "&:hover": {
-                transform: "Scale(1.02)", 
+                transform: "Scale(1.02)",
               },
             }}
+            onClick={() => router.push(`/question/${item._id}`)}
           >
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                m: "8px", 
+                m: "8px",
                 maxWidth: "55%",
                 textAlign: "left",
               }}
@@ -78,11 +81,10 @@ export default function Qcards() {
                   alignItems: "center",
                 }}
               >
-
                 <Typography
                   variant="h6"
                   sx={{
-                    fontSize: "1rem", 
+                    fontSize: "1rem",
                     fontWeight: "bold",
                   }}
                 >
@@ -91,8 +93,8 @@ export default function Qcards() {
               </Box>
               <Typography
                 sx={{
-                  fontSize: "0.85rem", 
-                  mt: "5px", 
+                  fontSize: "0.85rem",
+                  mt: "5px",
                 }}
               >
                 {item.description}
@@ -118,11 +120,11 @@ export default function Qcards() {
           <Button
             sx={{
               width: "20%",
-              maxWidth: "70px", 
-              minHeight: "80px", 
+              maxWidth: "70px",
+              minHeight: "80px",
               backgroundColor: "white",
-              boxShadow: "0px 2px 8px gray", 
-              my: "10px", 
+              boxShadow: "0px 2px 8px gray",
+              my: "10px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

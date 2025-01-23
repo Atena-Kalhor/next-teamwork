@@ -19,10 +19,16 @@ export async function addQuestion(formData) {
   revalidateTag("question");
 }
 
-
-
 export async function deleteQuestion(id) {
-  await fetch(`http://localhost:3000/api/v1/question/${id}`, { 
+  await fetch(`http://localhost:3000/api/v1/question/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
+  revalidateTag("question");
+}
+
+export async function deleteAnswer(id, index) {
+  await fetch(`http://localhost:3000/api/v1/question/${id}/${index}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
   });

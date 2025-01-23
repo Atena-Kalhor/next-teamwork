@@ -3,7 +3,7 @@ import Question from "@/db/models/Question";
 
 export async function GET(req, { params }) {
   try {
-    const { id } = params;
+    const { id, index } = params;
 
     if (!id) {
       return new Response("Question ID is required", { status: 400 });
@@ -12,12 +12,11 @@ export async function GET(req, { params }) {
     await connectDB();
 
     const question = await Question.findById(id);
-
     if (!question) {
       return new Response("Question not found", { status: 404 });
     }
 
-    return new Response(JSON.stringify(question), {
+    return new Response(JSON.stringify(question.answer), {
       headers: { "Content-Type": "application/json" },
       status: 200,
     });
@@ -31,14 +30,17 @@ export async function GET(req, { params }) {
 
 export async function DELETE(req, { params }) {
   try {
-    const { id } = params;
+    const { id, index } = params;
     await connectDB();
-    const question = await Question.findByIdAndDelete(id);
+    const question = await Question.findById(id);
     if (!question) {
       return new Response("question not found", { status: 404 });
     }
 
-    return new Response(JSON.stringify({ success: true }), {
+    const ans = await question.answer;
+    ans.splice(index, 1);
+    const q = await Question.findByIdAndUpdate(id, question);
+    return new Response(JSON.stringify(q), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
