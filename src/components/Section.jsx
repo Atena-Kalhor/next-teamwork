@@ -25,7 +25,9 @@ const FirstSection = () => {
           alias vitae velit possimus natus quod doloribus tempora repellat unde
           blanditiis.
         </Typography>
-        <Button variant="contained">GO TO QUESTIONS</Button>
+        <Button variant="contained" href="/question">
+          GO TO QUESTIONS
+        </Button>
       </Box>
       <Box sx={{ mx: { xs: 2, md: 5 }, my: { xs: 2, md: 0 } }}>
         <Image
