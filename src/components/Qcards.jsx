@@ -1,13 +1,15 @@
 "use client";
-
 import { Box, Button, Container, CssBaseline, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from "date-fns";
 import { getData, deleteQuestion } from "@/utils/actions";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 export default function Qcards() {
   const [questions, setQuestions] = useState([]);
+  const [sortOrder, setSortOrder] = useState("newest");
 
   const fetchQuestions = async () => {
     try {
@@ -32,10 +34,29 @@ export default function Qcards() {
     }
   };
 
+  const sortedQuestions = [...questions].sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
+  });
+
   return (
     <div>
       <CssBaseline />
-      {questions.map((item) => (
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+        <Typography variant="h6">Filter By: </Typography>
+        <Button onClick={() => setSortOrder("newest")} sx={{ color: "black" }}>
+          <ArrowDownwardIcon /> Newer
+        </Button>
+        <Button
+          onClick={() => setSortOrder("oldest")}
+          sx={{ color: "black", ml: 2 }}
+        >
+          <ArrowUpwardIcon />
+          Older
+        </Button>
+      </Box>
+      {sortedQuestions.map((item) => (
         <Container
           key={item._id}
           sx={{
@@ -57,7 +78,7 @@ export default function Qcards() {
               color: "black",
               transition: "transform 0.3s",
               "&:hover": {
-                transform: "Scale(1.02)", 
+                transform: "Scale(1.02)",
               },
             }}
           >
@@ -66,7 +87,7 @@ export default function Qcards() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                m: "8px", 
+                m: "8px",
                 maxWidth: "55%",
                 textAlign: "left",
               }}
@@ -78,11 +99,10 @@ export default function Qcards() {
                   alignItems: "center",
                 }}
               >
-
                 <Typography
                   variant="h6"
                   sx={{
-                    fontSize: "1rem", 
+                    fontSize: "1rem",
                     fontWeight: "bold",
                   }}
                 >
@@ -91,8 +111,8 @@ export default function Qcards() {
               </Box>
               <Typography
                 sx={{
-                  fontSize: "0.85rem", 
-                  mt: "5px", 
+                  fontSize: "0.85rem",
+                  mt: "5px",
                 }}
               >
                 {item.description}
@@ -102,13 +122,10 @@ export default function Qcards() {
               sx={{
                 m: "10px",
                 minWidth: "30%",
-                // height: "100%",
-                // backgroundColor: "pink",
                 color: "black",
               }}
             >
               <Typography variant="caption">
-                {" "}
                 {item.createdAt
                   ? format(new Date(item.createdAt), "dd MMMM yyyy, hh:mm a")
                   : "No date available"}
@@ -118,11 +135,11 @@ export default function Qcards() {
           <Button
             sx={{
               width: "20%",
-              maxWidth: "70px", 
-              minHeight: "80px", 
+              maxWidth: "70px",
+              minHeight: "80px",
               backgroundColor: "white",
-              boxShadow: "0px 2px 8px gray", 
-              my: "10px", 
+              boxShadow: "0px 2px 8px gray",
+              my: "10px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
