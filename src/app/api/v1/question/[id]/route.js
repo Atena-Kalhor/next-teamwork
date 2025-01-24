@@ -49,24 +49,26 @@ export async function DELETE(req, { params }) {
   }
 }
 
-
 export async function PATCH(req, { params }) {
   try {
-    const { id, index } = params;
+    const { id } = params;
+    const body = await req.json();
+    // console.log("this is the body:====");
+    // console.log(body);
     await connectDB();
     const question = await Question.findById(id);
     if (!question) {
       return new Response("question not found", { status: 404 });
     }
 
-    const ans = await question.answer;
-    ans.splice(index, 1);
+    const ans = (await question.answer) || [];
+    ans.push(body.answer);
     const q = await Question.findByIdAndUpdate(id, question);
     return new Response(JSON.stringify(q), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error deleting question:", error);
+    console.error("Error updating question:", error);
     disconnectDB();
   } finally {
     disconnectDB();

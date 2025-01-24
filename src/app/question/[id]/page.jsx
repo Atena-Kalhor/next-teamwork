@@ -66,7 +66,12 @@
 
 "use client";
 
-import { deleteAnswer, getData, patchAnswer } from "@/utils/actions";
+import {
+  deleteAnswer,
+  editAnswer,
+  getData,
+  patchAnswer,
+} from "@/utils/actions";
 import {
   Box,
   Button,
@@ -88,7 +93,11 @@ function Page({ params }) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      answer: "",
+    },
+  });
 
   const fetchData = async () => {
     try {
@@ -106,7 +115,8 @@ function Page({ params }) {
 
   const onSubmit = async (data) => {
     try {
-      const newAnswer = data.description;
+      const newAnswer = data.answer;
+      console.log(id, newAnswer);
       await patchAnswer(id, newAnswer);
       setAnswers([...answers, newAnswer]);
       reset();
@@ -116,6 +126,9 @@ function Page({ params }) {
     }
   };
 
+  function handleEdit(e, index) {
+    editAnswer(id, index, e.target.value);
+  }
   const handleDeleteAnswer = async (index) => {
     try {
       await deleteAnswer(id, index);
@@ -173,9 +186,61 @@ function Page({ params }) {
       >
         Answers:
       </Typography>
+
+      {answers.map((item, index) => (
+        <div
+          key={index}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "70%",
+            border: "1px solid #ccc",
+            backgroundColor: "white",
+            padding: "5px",
+            borderRadius: "8px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            marginBottom: "10px",
+          }}
+        >
+          <textarea
+            style={{
+              color: "#333",
+              fontSize: "14px",
+              width: "100%",
+              border: "1px solid #ccc",
+              backgroundColor: "white",
+              padding: "30px",
+              borderRadius: "8px",
+            }}
+            onChange={(e) => handleEdit(e, index)}
+            defaultValue={item}
+          ></textarea>
+
+          <Button
+            sx={{
+              width: "20%",
+              maxWidth: "70px",
+              minHeight: "80px",
+              my: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "black",
+              "&:hover": {
+                color: "red",
+              },
+            }}
+            onClick={() => handleDeleteAnswer(index)}
+          >
+            <DeleteIcon fontSize="small" />
+          </Button>
+        </div>
+      ))}
+
       <form
         onSubmit={handleSubmit(onSubmit)}
-        style={{ flexGrow: 1, width: "70%" }}
+        style={{ flexGrow: 1, width: "70%", marginBottom: "50px" }}
       >
         <Grid container spacing={2}>
           <Grid size={12}>
@@ -207,60 +272,8 @@ function Page({ params }) {
           </Grid>
         </Grid>
       </form>
-
-      {answers.map((item, index) => (
-        <div
-          key={index}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "70%",
-            border: "1px solid #ccc",
-            backgroundColor: "white",
-            padding: "5px",
-            borderRadius: "8px",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            marginBottom: "10px",
-          }}
-        >
-          <Typography
-            style={{
-              color: "#333",
-              fontSize: "14px",
-              width: "100%",
-              border: "1px solid #ccc",
-              backgroundColor: "white",
-              padding: "30px",
-              borderRadius: "8px",
-            }}
-          >
-            {item}
-          </Typography>
-
-          <Button
-            sx={{
-              width: "20%",
-              maxWidth: "70px",
-              minHeight: "80px",
-              my: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "black",
-              "&:hover": {
-                color: "red",
-              },
-            }}
-            onClick={() => handleDeleteAnswer(index)}
-          >
-            <DeleteIcon fontSize="small" />
-          </Button>
-        </div>
-      ))}
     </div>
   );
 }
 
 export default Page;
-

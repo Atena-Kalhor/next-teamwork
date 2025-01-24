@@ -28,6 +28,32 @@ export async function GET(req, { params }) {
   }
 }
 
+export async function PATCH(req, { params }) {
+  try {
+    const { id, index } = params;
+    const body = await req.json();
+    // console.log("this is the body:====");
+    // console.log(body);
+    await connectDB();
+    const question = await Question.findById(id);
+    if (!question) {
+      return new Response("question not found", { status: 404 });
+    }
+
+    const ans = (await question.answer) || [];
+    ans[index] = body.answer;
+    const q = await Question.findByIdAndUpdate(id, question);
+    return new Response(JSON.stringify(q), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error updating question:", error);
+    disconnectDB();
+  } finally {
+    disconnectDB();
+  }
+}
+
 export async function DELETE(req, { params }) {
   try {
     const { id, index } = params;
@@ -50,7 +76,3 @@ export async function DELETE(req, { params }) {
     disconnectDB();
   }
 }
-
-
-
-
