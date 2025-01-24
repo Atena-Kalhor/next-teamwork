@@ -6,9 +6,15 @@ import qaImage from "../../public/what_does_qa_stand_for.webp";
 const FirstSection = () => {
   return (
     <Container
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" }, // Column for small screens, row for medium and up
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: { xs: "center", md: "left" }, // Center text for small screens
+      }}
     >
-      <Box sx={{ mx: 5 }}>
+      <Box sx={{ mx: { xs: 2, md: 5 }, my: { xs: 2, md: 0 } }}>
         <Typography sx={{ letterSpacing: 6, mt: 4 }}>
           Find your Answers
         </Typography>
@@ -19,10 +25,20 @@ const FirstSection = () => {
           alias vitae velit possimus natus quod doloribus tempora repellat unde
           blanditiis.
         </Typography>
-        <Button variant="contained">GO TO QUESTIONS</Button>
+        <Button variant="contained" href="/question">
+          GO TO QUESTIONS
+        </Button>
       </Box>
-      <Box>
-        <Image src={qaImage} width={400} height={200} sx={{}} />
+      <Box sx={{ mx: { xs: 2, md: 5 }, my: { xs: 2, md: 0 } }}>
+        <Image
+          src={qaImage}
+          width={700}
+          height={400}
+          style={{
+            maxWidth: "100%",
+            height: "auto",
+          }}
+        />
       </Box>
     </Container>
   );

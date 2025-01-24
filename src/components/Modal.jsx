@@ -1,24 +1,8 @@
-"use client";
-import React from "react";
-import { Box, Modal, Button } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { Box, Button, Modal, Typography } from "@mui/material";
 
-
-export default function NestedModal({ open, handleClose }) {
-  const router = useRouter();
-
-  const handleYes = () => {
-    handleClose();
-    router.push("/question");
-  };
-
+function NestedModal({ open, handleClose, handleConfirm }) {
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="parent-modal-title"
-      aria-describedby="parent-modal-description"
-    >
+    <Modal open={open} onClose={handleClose}>
       <Box
         sx={{
           position: "absolute",
@@ -28,29 +12,32 @@ export default function NestedModal({ open, handleClose }) {
           width: 400,
           bgcolor: "background.paper",
           boxShadow: 24,
-          pt: 2,
-          px: 4,
-          pb: 3,
-          width: 400,
+          p: 4,
+          borderRadius: "8px",
         }}
       >
-        <p id="parent-modal-description">Are you sure?</p>
+        <Typography variant="h6" component="h2">
+          Are you sure?
+        </Typography>
+
         <Box
           sx={{
             display: "flex",
             justifyContent: "flex-end",
+            mt: 4,
             gap: 2,
-            mt: 2,
           }}
         >
-          <Button onClick={handleClose} variant="outlined">
+          <Button variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleYes} variant="contained">
-            Yes
+          <Button variant="contained"  onClick={handleConfirm}>
+           yes
           </Button>
         </Box>
       </Box>
     </Modal>
   );
 }
+
+export default NestedModal;

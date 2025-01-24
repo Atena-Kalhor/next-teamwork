@@ -1,9 +1,12 @@
-import { Box, Button, Container, CssBaseline, Typography } from "@mui/material";
-import React from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Scale } from "@mui/icons-material";
+"use client";
 
-function Qcards({ time }) {
+import { Box, Button, Container, CssBaseline, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { format } from "date-fns";
+import { getData, deleteQuestion } from "@/utils/actions";
+
+function Qcards() {
   const d = new Date();
   console.log(d.toJSON());
   const data = [
@@ -11,78 +14,69 @@ function Qcards({ time }) {
       id: "1",
       title: "JS",
       discription: "this is a question of js",
-      time: time,
+      time: d,
     },
     {
       id: "2",
       title: "React",
       discription: "this is a question of react",
-      time: time,
+      time: d,
     },
     {
       id: "3",
       title: "Redux",
       discription:
         "this is a question of redux and i would be glad if anyone could anser me",
-      time: time,
+      time: d,
     },
     {
       id: "4",
       title: "css",
       discription:
         "this is a question of redux and i would be glad if anyone could anser me. if there is any problem pls give me some advice. thank you",
-      time: time,
+      time: d,
     },
   ];
 
   return (
     <div>
       <CssBaseline />
-      {data.map((item) => {
-        return (
-          <Container
+      {questions.map((item) => (
+        <Container
+          key={item._id}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "20px",
+          }}
+        >
+          <Button
             sx={{
+              width: "60%",
+              minHeight: "80px",
+              backgroundColor: "white",
+              boxShadow: "0px 2px 8px gray",
+              my: "10px",
               display: "flex",
-              justifyContent: "center",
-              // backgroundColor: "green",
-              gap: "30px",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              color: "black",
+              transition: "transform 0.3s",
+              "&:hover": {
+                transform: "Scale(1.02)", 
+              },
             }}
           >
-            <Button
-              key={item.id}
+            <Box
               sx={{
-                width: "70%",
-                minHeighteight: "100px",
-                backgroundColor: "white",
-                boxShadow: "0px 3px 10px gray",
-                my: "15px",
-                // mx: "auto",
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                color: "black",
-                transition: "transform 0.5s",
-                // backgroundColor: "yellow",
-                "&:hover": {
-                  transform: "Scale(1.05)",
-                },
+                flexDirection: "column",
+                justifyContent: "center",
+                m: "8px", 
+                maxWidth: "55%",
+                textAlign: "left",
               }}
-              // onClick={}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  m: "10px",
-                  maxWidth: "60%",
-                  // backgroundColor: "green",
-                  textAlign: "left",
-                }}
-              >
-                <Typography variant="h5">{item.title}</Typography>
-                <Typography>{item.discription.slice(0)}</Typography>
-              </Box>
               <Box
                 sx={{
                   m: "10px",
@@ -91,7 +85,9 @@ function Qcards({ time }) {
                   // backgroundColor: "pink",
                 }}
               >
-                <Typography textAlign={"end"}>{time}</Typography>
+                <Typography textAlign={"end"}>
+                  {item.time.toLocaleString()}
+                </Typography>
               </Box>
             </Button>
             <Button
@@ -120,5 +116,3 @@ function Qcards({ time }) {
     </div>
   );
 }
-
-export default Qcards;
