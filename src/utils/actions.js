@@ -34,3 +34,34 @@ export async function deleteAnswer(id, index) {
   });
   revalidateTag("question");
 }
+
+
+export async function patchAnswer(id) {
+  await fetch(`http://localhost:3000/api/v1/question/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+  });
+  revalidateTag("question");
+}
+
+
+
+
+// export async function addAnswer(questionId, newAnswer) {
+//   try {
+//     const response = await fetch(`/api/v1/question/${questionId}/answer`, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ answer: newAnswer }),
+//     });
+
+//     if (!response.ok) {
+//       throw new Error("Failed to add answer");
+//     }
+
+//     return await response.json();
+//   } catch (error) {
+//     console.error("Error in addAnswer:", error);
+//     throw error;
+//   }
+// }
