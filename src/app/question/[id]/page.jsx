@@ -231,6 +231,7 @@ function Page({ params }) {
               color: theme.palette.text.primary,
               "&:hover": {
                 color: "red",
+                backgroundColor: theme.palette.background.paper,
               },
             }}
             onClick={() => handleDeleteAnswer(index)}
