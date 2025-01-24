@@ -6,9 +6,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from "date-fns";
 import { getData, deleteQuestion } from "@/utils/actions";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@mui/material/styles";
 
 export default function Qcards() {
   const [questions, setQuestions] = useState([]);
+  const theme = useTheme();
 
   const router = useRouter();
   const fetchQuestions = async () => {
@@ -50,13 +52,14 @@ export default function Qcards() {
             sx={{
               width: "60%",
               minHeight: "80px",
-              backgroundColor: "white",
+              color: theme.palette.text.primary,
+              backgroundColor: theme.palette.background.paper,
               boxShadow: "0px 2px 8px gray",
               my: "10px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "flex-start",
-              color: "black",
+
               transition: "transform 0.3s",
               "&:hover": {
                 transform: "Scale(1.02)",
@@ -104,9 +107,6 @@ export default function Qcards() {
               sx={{
                 m: "10px",
                 minWidth: "30%",
-                // height: "100%",
-                // backgroundColor: "pink",
-                color: "black",
               }}
             >
               <Typography variant="caption">
@@ -122,13 +122,14 @@ export default function Qcards() {
               width: "20%",
               maxWidth: "70px",
               minHeight: "80px",
-              backgroundColor: "white",
+              color: theme.palette.text.primary,
+              backgroundColor: theme.palette.background.paper,
               boxShadow: "0px 2px 8px gray",
               my: "10px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              color: "black",
+
               "&:hover": {
                 color: "red",
               },
