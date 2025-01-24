@@ -1,47 +1,62 @@
 "use client";
-
 import { Box, Button, Container, CssBaseline, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from "date-fns";
 import { getData, deleteQuestion } from "@/utils/actions";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
-function Qcards() {
-  const d = new Date();
-  console.log(d.toJSON());
-  const data = [
-    {
-      id: "1",
-      title: "JS",
-      discription: "this is a question of js",
-      time: d,
-    },
-    {
-      id: "2",
-      title: "React",
-      discription: "this is a question of react",
-      time: d,
-    },
-    {
-      id: "3",
-      title: "Redux",
-      discription:
-        "this is a question of redux and i would be glad if anyone could anser me",
-      time: d,
-    },
-    {
-      id: "4",
-      title: "css",
-      discription:
-        "this is a question of redux and i would be glad if anyone could anser me. if there is any problem pls give me some advice. thank you",
-      time: d,
-    },
-  ];
+export default function Qcards() {
+  const [questions, setQuestions] = useState([]);
+  const [sortOrder, setSortOrder] = useState("newest");
+
+  const fetchQuestions = async () => {
+    try {
+      const data = await getData("http://localhost:3000/api/v1/question");
+      setQuestions(data);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteQuestion(id);
+      setQuestions(questions.filter((question) => question._id !== id));
+    } catch (error) {
+      console.error("Error deleting question:", error);
+      alert("Failed to delete question. Please try again.");
+    }
+  };
+
+  const sortedQuestions = [...questions].sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
+  });
 
   return (
     <div>
       <CssBaseline />
-      {questions.map((item) => (
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+        <Typography variant="h6">Filter By: </Typography>
+        <Button onClick={() => setSortOrder("newest")} sx={{ color: "black" }}>
+          <ArrowDownwardIcon /> Newer
+        </Button>
+        <Button
+          onClick={() => setSortOrder("oldest")}
+          sx={{ color: "black", ml: 2 }}
+        >
+          <ArrowUpwardIcon />
+          Older
+        </Button>
+      </Box>
+      {sortedQuestions.map((item) => (
         <Container
           key={item._id}
           sx={{
@@ -63,7 +78,7 @@ function Qcards() {
               color: "black",
               transition: "transform 0.3s",
               "&:hover": {
-                transform: "Scale(1.02)", 
+                transform: "Scale(1.02)",
               },
             }}
           >
@@ -72,47 +87,73 @@ function Qcards() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                m: "8px", 
+                m: "8px",
                 maxWidth: "55%",
                 textAlign: "left",
               }}
             >
               <Box
                 sx={{
-                  m: "10px",
-                  minWidth: "40%",
-                  // height: "100%",
-                  // backgroundColor: "pink",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                <Typography textAlign={"end"}>
-                  {item.time.toLocaleString()}
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.title}
                 </Typography>
               </Box>
-            </Button>
-            <Button
+              <Typography
+                sx={{
+                  fontSize: "0.85rem",
+                  mt: "5px",
+                }}
+              >
+                {item.description}
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                width: "30%",
-                maxWidth: "90px",
-                minHeighteight: "100px",
-                backgroundColor: "white",
-                boxShadow: "0px 3px 10px gray",
-                my: "15px",
-                // mx: "auto",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                m: "10px",
+                minWidth: "30%",
                 color: "black",
-                "&:hover": {
-                  color: "red",
-                },
               }}
             >
-              <DeleteIcon></DeleteIcon>
-            </Button>
-          </Container>
-        );
-      })}
+              <Typography variant="caption">
+                {item.createdAt
+                  ? format(new Date(item.createdAt), "dd MMMM yyyy, hh:mm a")
+                  : "No date available"}
+              </Typography>
+            </Box>
+          </Button>
+          <Button
+            sx={{
+              width: "20%",
+              maxWidth: "70px",
+              minHeight: "80px",
+              backgroundColor: "white",
+              boxShadow: "0px 2px 8px gray",
+              my: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "black",
+              "&:hover": {
+                color: "red",
+              },
+            }}
+            onClick={() => handleDelete(item._id)}
+          >
+            <DeleteIcon fontSize="small" />
+          </Button>
+        </Container>
+      ))}
     </div>
   );
 }

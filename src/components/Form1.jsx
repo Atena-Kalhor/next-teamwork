@@ -27,19 +27,17 @@ function Form1() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState(null);
 
-
-
   const onSubmit = (data) => {
     setFormData(data);
-    console.log("form data modal open:", data); 
+    console.log("form data modal open:", data);
     setIsModalOpen(true);
   };
- 
+
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
   const handleModalConfirm = async () => {
-    console.log("form data before post:", formData); 
+    console.log("form data before post:", formData);
     try {
       await addQuestion(formData);
       console.log("question posted successfully!");
@@ -51,7 +49,6 @@ function Form1() {
       setFormData(null);
     }
   };
-  
 
   return (
     <Box
@@ -114,7 +111,7 @@ function Form1() {
           </Grid>
         </Grid>
       </form>
-   
+
       <NestedModal
         open={isModalOpen}
         title={formData?.title}
