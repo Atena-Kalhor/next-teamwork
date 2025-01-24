@@ -82,11 +82,13 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTheme } from "@mui/material/styles";
 
 function Page({ params }) {
   const { id } = params;
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
+  const theme = useTheme();
 
   const {
     register,
@@ -196,7 +198,7 @@ function Page({ params }) {
             alignItems: "center",
             width: "70%",
             border: "1px solid #ccc",
-            backgroundColor: "white",
+
             padding: "5px",
             borderRadius: "8px",
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -205,11 +207,11 @@ function Page({ params }) {
         >
           <textarea
             style={{
-              color: "#333",
+              color: theme.palette.text.primary,
+              backgroundColor: theme.palette.background.paper,
               fontSize: "14px",
               width: "100%",
-              border: "1px solid #ccc",
-              backgroundColor: "white",
+              border: `1px solid ${theme.palette.divider}`,
               padding: "30px",
               borderRadius: "8px",
             }}
@@ -226,7 +228,7 @@ function Page({ params }) {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              color: "black",
+              color: theme.palette.text.primary,
               "&:hover": {
                 color: "red",
               },
