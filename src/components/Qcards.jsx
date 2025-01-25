@@ -205,7 +205,7 @@ export default function Qcards() {
               sx={{
                 m: "10px",
                 minWidth: "30%",
-                color: "black",
+                color: theme.palette.text.primary,
               }}
             >
               <Typography variant="caption">
