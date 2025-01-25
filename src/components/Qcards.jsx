@@ -84,12 +84,13 @@ export default function Qcards() {
           alignItems: "center",
         }}
       >
+        <Typography variant="h3" sx={{ marginTop: "40px"}}>Questions</Typography>
         <Box
           sx={{
             display: "flex",
             gap: "10px",
             marginBottom: "16px",
-            marginTop: "16px",
+            marginTop: "30px",
             position: "relative",
           }}
         >
