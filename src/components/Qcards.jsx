@@ -6,12 +6,14 @@ import { format } from "date-fns";
 import { getData, deleteQuestion } from "@/utils/actions";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { useRouter } from "next/navigation";
 import { useTheme } from "@mui/material/styles";
 
 export default function Qcards() {
   const [questions, setQuestions] = useState([]);
   const [sortOrder, setSortOrder] = useState("newest");
   const theme = useTheme();
+  const router = useRouter();
 
   const fetchQuestions = async () => {
     try {
@@ -86,6 +88,7 @@ export default function Qcards() {
                 transform: "Scale(1.02)",
               },
             }}
+            onClick={() => router.push(`/question/${item._id}`)}
           >
             <Box
               sx={{
