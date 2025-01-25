@@ -18,6 +18,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTheme } from "@mui/material/styles";
 
+
+
+
 function Page({ params }) {
   const { id } = params;
   const [question, setQuestion] = useState(null);
@@ -77,9 +80,9 @@ function Page({ params }) {
     }
   };
 
-  if (!question) {
-    return <Typography>Loading...</Typography>;
-  }
+  // if (!question) {
+  //   return <Typography>Loading...</Typography>;
+  // }
 
   return (
     <div
