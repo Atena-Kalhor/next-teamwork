@@ -1,18 +1,18 @@
 "use client";
-
 import { Box, Button, Container, CssBaseline, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from "date-fns";
 import { getData, deleteQuestion } from "@/utils/actions";
-import { useRouter } from "next/navigation";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useTheme } from "@mui/material/styles";
 
 export default function Qcards() {
   const [questions, setQuestions] = useState([]);
+  const [sortOrder, setSortOrder] = useState("newest");
   const theme = useTheme();
 
-  const router = useRouter();
   const fetchQuestions = async () => {
     try {
       const data = await getData("http://localhost:3000/api/v1/question");
@@ -36,10 +36,32 @@ export default function Qcards() {
     }
   };
 
+  const sortedQuestions = [...questions].sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
+  });
+
   return (
     <div>
       <CssBaseline />
-      {questions.map((item) => (
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+        <Typography variant="h6">Filter By: </Typography>
+        <Button
+          onClick={() => setSortOrder("newest")}
+          sx={{ color: theme.palette.text.primary }}
+        >
+          <ArrowDownwardIcon /> Newer
+        </Button>
+        <Button
+          onClick={() => setSortOrder("oldest")}
+          sx={{ color: theme.palette.text.primary, ml: 2 }}
+        >
+          <ArrowUpwardIcon />
+          Older
+        </Button>
+      </Box>
+      {sortedQuestions.map((item) => (
         <Container
           key={item._id}
           sx={{
@@ -59,13 +81,11 @@ export default function Qcards() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "flex-start",
-
               transition: "transform 0.3s",
               "&:hover": {
                 transform: "Scale(1.02)",
               },
             }}
-            onClick={() => router.push(`/question/${item._id}`)}
           >
             <Box
               sx={{
@@ -107,10 +127,10 @@ export default function Qcards() {
               sx={{
                 m: "10px",
                 minWidth: "30%",
+                color: "black",
               }}
             >
               <Typography variant="caption">
-                {" "}
                 {item.createdAt
                   ? format(new Date(item.createdAt), "dd MMMM yyyy, hh:mm a")
                   : "No date available"}
@@ -129,7 +149,6 @@ export default function Qcards() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-
               "&:hover": {
                 color: "red",
               },
