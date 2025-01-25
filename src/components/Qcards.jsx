@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Box, Button, Container, CssBaseline, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -12,10 +11,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@mui/material/styles";
 
-
 export default function Qcards() {
-
-
   const [questions, setQuestions] = useState([]);
   const [sortOrder, setSortOrder] = useState("newest");
   const [filteredQuestions, setFilteredQuestions] = useState([]);
@@ -84,7 +80,9 @@ export default function Qcards() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h3" sx={{ marginTop: "40px"}}>Questions</Typography>
+        <Typography variant="h3" sx={{ marginTop: "40px" }}>
+          Questions
+        </Typography>
         <Box
           sx={{
             display: "flex",
@@ -104,7 +102,7 @@ export default function Qcards() {
               padding: "8px 40px 8px 30px",
               borderRadius: "4px",
               border: "1px solid gray",
-              width: "500px",
+              width: "50vw",
               color: theme.palette.text.primary,
               backgroundColor: theme.palette.background.paper,
             }}
@@ -150,7 +148,8 @@ export default function Qcards() {
         >
           <Button
             sx={{
-              width: "60%",
+              // width: "60%",
+              width: { xs: "50%", sm: "50%", md: "60%" },
               minHeight: "80px",
               color: theme.palette.text.primary,
               backgroundColor: theme.palette.background.paper,
@@ -158,6 +157,7 @@ export default function Qcards() {
               my: "10px",
               display: "flex",
               justifyContent: "space-between",
+              flexDirection: { xs: "column", md: "row" },
               alignItems: "flex-start",
               transition: "transform 0.3s",
               "&:hover": {
@@ -172,8 +172,10 @@ export default function Qcards() {
                 flexDirection: "column",
                 justifyContent: "center",
                 m: "8px",
-                maxWidth: "55%",
+                maxWidth: { md:  "55%" },
                 textAlign: "left",
+                Width: { xs:  "100%" },
+            
               }}
             >
               <Box
@@ -181,6 +183,8 @@ export default function Qcards() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+               
+              
                 }}
               >
                 <Typography
@@ -197,6 +201,7 @@ export default function Qcards() {
                 sx={{
                   fontSize: "0.85rem",
                   mt: "5px",
+                  
                 }}
               >
                 {item.description}
@@ -218,9 +223,9 @@ export default function Qcards() {
           </Button>
           <Button
             sx={{
-              width: "20%",
-              maxWidth: "70px",
-              minHeight: "80px",
+              width: { sm: "10px", md: "40px" },
+              // maxWidth: "70px",
+              // minHeight: "80px",
               color: theme.palette.text.primary,
               backgroundColor: theme.palette.background.paper,
               boxShadow: "0px 2px 8px gray",
