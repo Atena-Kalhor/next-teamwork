@@ -3,7 +3,7 @@ import Question from "@/db/models/Question";
 
 export async function GET(req, { params }) {
   try {
-    const { id } = params;
+    const { id, index } = params;
 
     if (!id) {
       return new Response("Question ID is required", { status: 400 });
@@ -12,12 +12,11 @@ export async function GET(req, { params }) {
     await connectDB();
 
     const question = await Question.findById(id);
-
     if (!question) {
       return new Response("Question not found", { status: 404 });
     }
 
-    return new Response(JSON.stringify(question), {
+    return new Response(JSON.stringify(question.answer), {
       headers: { "Content-Type": "application/json" },
       status: 200,
     });
@@ -29,29 +28,9 @@ export async function GET(req, { params }) {
   }
 }
 
-export async function DELETE(req, { params }) {
-  try {
-    const { id } = params;
-    await connectDB();
-    const question = await Question.findByIdAndDelete(id);
-    if (!question) {
-      return new Response("question not found", { status: 404 });
-    }
-
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error("Error deleting question:", error);
-    disconnectDB();
-  } finally {
-    disconnectDB();
-  }
-}
-
 export async function PATCH(req, { params }) {
   try {
-    const { id } = params;
+    const { id, index } = params;
     const body = await req.json();
     // console.log("this is the body:====");
     // console.log(body);
@@ -62,13 +41,36 @@ export async function PATCH(req, { params }) {
     }
 
     const ans = (await question.answer) || [];
-    ans.push(body.answer);
+    ans[index] = body.answer;
     const q = await Question.findByIdAndUpdate(id, question);
     return new Response(JSON.stringify(q), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Error updating question:", error);
+    disconnectDB();
+  } finally {
+    disconnectDB();
+  }
+}
+
+export async function DELETE(req, { params }) {
+  try {
+    const { id, index } = params;
+    await connectDB();
+    const question = await Question.findById(id);
+    if (!question) {
+      return new Response("question not found", { status: 404 });
+    }
+
+    const ans = await question.answer;
+    ans.splice(index, 1);
+    const q = await Question.findByIdAndUpdate(id, question);
+    return new Response(JSON.stringify(q), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error deleting question:", error);
     disconnectDB();
   } finally {
     disconnectDB();
