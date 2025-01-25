@@ -80,9 +80,9 @@ function Page({ params }) {
     }
   };
 
-  // if (!question) {
-  //   return <Typography>Loading...</Typography>;
-  // }
+  if (!question) {
+    return <Typography>Loading...</Typography>;
+  }
 
   return (
     <div
