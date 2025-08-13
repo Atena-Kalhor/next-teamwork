@@ -3,7 +3,7 @@
 import {
   deleteAnswer,
   editAnswer,
-  getData,
+  getQuestionById,
   patchAnswer,
 } from "@/utils/actions";
 import {
@@ -17,9 +17,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTheme } from "@mui/material/styles";
-
-
-
 
 function Page({ params }) {
   const { id } = params;
@@ -40,9 +37,9 @@ function Page({ params }) {
 
   const fetchData = async () => {
     try {
-      const data = await getData(`http://localhost:3000/api/v1/question/${id}`);
+      const data = await getQuestionById(id);
       setQuestion(data);
-      setAnswers(data.answer || []);
+      setAnswers(data?.answer || []);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
