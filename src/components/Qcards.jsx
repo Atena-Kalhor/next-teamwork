@@ -4,7 +4,7 @@ import { Box, Button, Container, CssBaseline, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from "date-fns";
-import { getData, deleteQuestion } from "@/utils/actions";
+import { getAllQuestions, deleteQuestion } from "@/utils/actions";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import SearchIcon from "@mui/icons-material/Search";
@@ -22,7 +22,7 @@ export default function Qcards() {
 
   const fetchQuestions = async () => {
     try {
-      const data = await getData("http://localhost:3000/api/v1/question");
+      const data = await getAllQuestions();
       setQuestions(data);
       setFilteredQuestions(data);
     } catch (error) {
@@ -172,10 +172,9 @@ export default function Qcards() {
                 flexDirection: "column",
                 justifyContent: "center",
                 m: "8px",
-                maxWidth: { md:  "55%" },
+                maxWidth: { md: "55%" },
                 textAlign: "left",
-                Width: { xs:  "100%" },
-            
+                Width: { xs: "100%" },
               }}
             >
               <Box
@@ -183,8 +182,6 @@ export default function Qcards() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-               
-              
                 }}
               >
                 <Typography
@@ -201,7 +198,6 @@ export default function Qcards() {
                 sx={{
                   fontSize: "0.85rem",
                   mt: "5px",
-                  
                 }}
               >
                 {item.description}
